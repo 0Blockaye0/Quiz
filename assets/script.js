@@ -27,6 +27,10 @@ console.log(QandA);
 
 var i = 0;
 
+let questionEl = document.getElementById("question");
+  
+let choiceEl = document.getElementsByClassName("choice-container");
+
 //timer function
 function countdown() {
     var timeDisplay = document.getElementById("timer");
@@ -49,9 +53,7 @@ function startQuiz() {
   debugger;
   
   //how do i access the h1 element in the div for questions?
-  let questionEl = document.getElementById("question");
   
-  let choiceEl = document.getElementsByClassName("choice-container");
   
   //will this remove or clear all the child elements in the choice div so its blank every time
   //a new set of choices is loaded to the screen?
