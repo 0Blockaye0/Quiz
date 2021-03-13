@@ -4,22 +4,22 @@ var startButton = document.getElementById("start-quiz");
 var QandA = [
     {
       q: "this is question 1?",
-      ch: ["A-answer", "B-answer", "C-answer", "D-answer"],
+      ch: ["1A-answer", "1B-answer", "1C-answer", "1D-answer"],
       a: "a"
     }, 
     {
       q: "this is question 2?",
-      ch: ["A-answer", "B-answer", "C-answer", "D-answer"],
+      ch: ["2A-answer", "2B-answer", "2C-answer", "2D-answer"],
       a: "b"
     },
     {
       q: "this is question 3?",
-      ch: ["A-answer", "B-answer", "C-answer", "D-answer"],
+      ch: ["3A-answer", "3B-answer", "3C-answer", "3D-answer"],
       a: "c"
     },
     {
       q: "this is question 4?",
-      ch: ["A-answer", "B-answer", "C-answer", "D-answer"],
+      ch: ["4A-answer", "4B-answer", "4C-answer", "4D-answer"],
       a: "d"
     }
   ];
@@ -55,12 +55,9 @@ function startQuiz() {
   
   //how do i access the h1 element in the div for questions?
   
-  
-  //will this remove or clear all the child elements in the choice div so its blank every time
-  //a new set of choices is loaded to the screen?
-  // while (choiceEl.firstChild) {
-  //   choiceEl.removeChild(choiceEl.firstChild);
-  // };
+  while (choiceEl.firstChild) {
+  choiceEl.removeChild(choiceEl.firstChild);
+  };
   
   let currentQuestion = QandA[i].q;
   questionEl.innerHTML = currentQuestion;
