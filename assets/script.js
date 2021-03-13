@@ -5,22 +5,23 @@ var QandA = [
     {
       q: "this is question 1?",
       ch: ["1A-answer", "1B-answer", "1C-answer", "1D-answer"],
-      a: "a"
+      a: 0
+      
     }, 
     {
       q: "this is question 2?",
       ch: ["2A-answer", "2B-answer", "2C-answer", "2D-answer"],
-      a: "b"
+      a: 1
     },
     {
       q: "this is question 3?",
       ch: ["3A-answer", "3B-answer", "3C-answer", "3D-answer"],
-      a: "c"
+      a: 2
     },
     {
       q: "this is question 4?",
       ch: ["4A-answer", "4B-answer", "4C-answer", "4D-answer"],
-      a: "d"
+      a: 3
     }
   ];
 console.log(QandA);
@@ -30,7 +31,7 @@ var i = 0;
 let questionEl = document.getElementById("question");
   
 let choiceEl = document.getElementById("choice-container");
-console.log(choiceEl);
+
 
 //timer function
 function countdown() {
@@ -47,8 +48,6 @@ function countdown() {
       }
     }
 };
-
-
 
 function startQuiz() {
   debugger;
@@ -71,17 +70,33 @@ function startQuiz() {
 
   currentChoices.forEach(function(choice, i ) {
     let chB = document.createElement("button");
-    chB.setAttribute("value", choice);
     chB.textContent = i + 1 + "." + choice;
-    console.log(chB);
     choiceEl.appendChild(chB);
+    if (QandA[i].a = currentChoices.indexOf(choice)) {
+      chB.setAttribute("value", false);
+      console.log(currentChoices.indexOf(choice));
+    }
+    else {
+      chB.setAttribute("value", true);
+    }
+    console.log(chB);
     i + 1;
   });
   
 
 };
 
-startButton.addEventListener("click", countdown);
+/////////////////////////////////////////
+
+// function submitChoice {
+//   buttonClicked =
+//   let userAnswer = buttonClicked
+   
+//   if (QandA[i].a = QandA[i].ch.indexOf(i))
+// };
+/////////////////////////////////////////
+
+//startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", startQuiz);
 
 
