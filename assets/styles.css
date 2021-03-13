@@ -27,7 +27,7 @@ main {
    margin: 10px;
 }
 
-.choice-content {
+#choice-container {
     display: flex;
     justify-content: center;
     margin-top: 10px;

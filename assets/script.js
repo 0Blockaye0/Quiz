@@ -29,7 +29,8 @@ var i = 0;
 
 let questionEl = document.getElementById("question");
   
-let choiceEl = document.getElementsByClassName("choice-container");
+let choiceEl = document.getElementById("choice-container");
+console.log(choiceEl);
 
 //timer function
 function countdown() {
