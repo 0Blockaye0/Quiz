@@ -1,45 +1,49 @@
 
 var startButton = document.getElementById("start-quiz");
 
+var points = 0;
+
+var i = 0;
+
 var QandA = [
     {
-      q: "this is question 1?",
-      ch: ["1A-answer", "1B-answer", "1C-answer", "1D-answer"],
-      a: 0
+      q: "what color is the sky?",
+      ch: ["Blue", "brown", "yellow", "red"],
+      a: "Blue"
       
     }, 
     {
-      q: "this is question 2?",
-      ch: ["2A-answer", "2B-answer", "2C-answer", "2D-answer"],
-      a: 1
+      q: "what color is the grass?",
+      ch: ["teal", "pink", "green", "orange"],
+      a: "green"
     },
     {
-      q: "this is question 3?",
-      ch: ["3A-answer", "3B-answer", "3C-answer", "3D-answer"],
-      a: 2
+      q: "what does the word 'var' do?",
+      ch: ["wrong-answer", "declares a variable", "wrong-answer", "wrong-answer"],
+      a: "declares a variable"
     },
     {
-      q: "this is question 4?",
-      ch: ["4A-answer", "4B-answer", "4C-answer", "4D-answer"],
-      a: 3
+      q: "what does HTML stand for?",
+      ch: ["hyper-text-markup-language", "wrong-answer", "wrong-answer", "wrong-answer"],
+      a: "hyper-text-markup-language"
     }
   ];
 console.log(QandA);
 
-var i = 0;
+var time = QandA.length * 15;
+
+var score = time + points;
 
 let questionEl = document.getElementById("question");
   
 let choiceEl = document.getElementById("choice-container");
 
-
 //timer function
 function countdown() {
     var timeDisplay = document.getElementById("timer");
-    var time = 60;
     var timeleft = setInterval(counter, 1000);
     function counter() {
-      if (time == 0) {
+      if (time == 0 || i + 1 > QandA.length) {
           console.log(time);
         clearInterval(timeleft);
       } else {
@@ -50,41 +54,76 @@ function countdown() {
 };
 
 function startQuiz() {
-  debugger;
-  
-  //how do i access the h1 element in the div for questions?
-  
+  //debugger;
   while (choiceEl.firstChild) {
   choiceEl.removeChild(choiceEl.firstChild);
   };
-  
-  let currentQuestion = QandA[i].q;
-  questionEl.innerHTML = currentQuestion;
-  console.log(currentQuestion);
 
+  let currentQuestion = QandA[i].q;
   let currentChoices = QandA[i].ch;
-  console.log(currentChoices);
-  
-  //let choice = currentChoices[i];
-  //console.log(choice);
+
+  questionEl.innerHTML = currentQuestion;
 
   currentChoices.forEach(function(choice, i ) {
     let chB = document.createElement("button");
     chB.textContent = i + 1 + "." + choice;
-    choiceEl.appendChild(chB);
-    if (QandA[i].a = currentChoices.indexOf(choice)) {
-      chB.setAttribute("value", false);
-      console.log(currentChoices.indexOf(choice));
-    }
-    else {
+    //************************//
+    // console.log(QandA[i]);
+    // console.log(choice);
+    // console.log(QandA[i].a);
+    if (QandA[i].a === choice) {
       chB.setAttribute("value", true);
+      chB.addEventListener("click", correctFun);
+      console.log(chB);
+    } else {
+      chB.setAttribute("value", false);
+      chB.addEventListener("click", incorrectFun);
+      console.log(chB);
     }
-    console.log(chB);
-    i + 1;
+    choiceEl.appendChild(chB);
+    i++;
   });
-  
-
+  i++;
+  console.log(i);
 };
+
+function correctFun() {
+  //debugger;
+  //logic for correct prompt fade
+  //goes here
+
+  //assign points??
+  points = points + 10;
+  if (i + 1 <= QandA.length) {
+    startQuiz();
+  } else {
+    quizOver();
+  }
+};
+
+function incorrectFun() {
+  //debugger;
+  //logic for incorrect prompt
+  //fade goes here
+
+  //deduct points??
+  time = time - 10;
+
+  if (i + 1 <= QandA.length) {
+    startQuiz();
+  } else {
+    quizOver();
+  }
+};
+
+function quizOver() {
+  
+  console.log(score);
+  console.log(time);
+  console.log(points);
+  clearInterval(timeleft);
+};
+
 
 /////////////////////////////////////////
 
@@ -96,15 +135,12 @@ function startQuiz() {
 // };
 /////////////////////////////////////////
 
-//startButton.addEventListener("click", countdown);
+startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", startQuiz);
 
+// correctAnswerButton.addEventListener("click", correctFun);
 
-
-
-
-
-
+// incorrectAnswerButton.addEventListener("click", incorrectFun);
 
 
 
