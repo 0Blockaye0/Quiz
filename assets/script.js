@@ -37,16 +37,10 @@ var round = 0;
 var timeDisplay = document.getElementById("timer");
 
 // Get the existing data
-var existingScores = localStorage.getItem('high-score');
-
-// If no existing data, create an array
-// Otherwise, convert the localStorage string to an array
-existingScores = existingScores ? JSON.parse(existingScores) : {};
+var existingScores = JSON.parse(localStorage.getItem('high-score')) || [];
 console.log(existingScores);
 
-var highScoreArr = [];
-
-
+var viewScoresButton = document.getElementById("high-score-link");
 
 //timer function
 function countdown() {
@@ -64,7 +58,7 @@ function countdown() {
 };
 
 function startQuiz() {
-  //debugger;
+
   while (choiceEl.firstChild) {
     choiceEl.removeChild(choiceEl.firstChild);
   };
@@ -72,39 +66,27 @@ function startQuiz() {
   let currentQuestion = QandA[round].q;
   let currentChoices = QandA[round].ch;
   let currentAnswer = QandA[round].a;
-  console.log("current a outside for each loop", currentAnswer);
 
   questionEl.innerHTML = currentQuestion;
 
   currentChoices.forEach(function(choice, i ) {
     let chB = document.createElement("button");
     chB.textContent = i + 1 + "." + choice;
-    console.log("a", currentAnswer);
-     console.log("coice", choice);
-    // console.log(QandA[i].a);
     if (currentAnswer === choice) {
       chB.setAttribute("value", true);
       chB.addEventListener("click", correctFun);
-      console.log("if", chB);
     } else {
       chB.setAttribute("value", false);
       chB.addEventListener("click", incorrectFun);
-      console.log("else", chB);
     }
     choiceEl.appendChild(chB);
-    //i++;
   });
   round++;
-  //x++;
   console.log("end round value", round);
 };
 
 function correctFun() {
-  //debugger;
-  //logic for correct prompt fade
-  //goes here
 
-  //assign points??
   if (round + 1 <= QandA.length) {
     startQuiz();
   } else {
@@ -113,11 +95,7 @@ function correctFun() {
 };
 
 function incorrectFun() {
-  //debugger;
-  //logic for incorrect prompt
-  //fade goes here
-
-  //deduct points??
+  
   time = time - 10;
 
   if (round + 1 <= QandA.length) {
@@ -126,8 +104,6 @@ function incorrectFun() {
     quizOver();
   }
 };
-
-
 
 function quizOver() {
   timeDisplay.innerHTML =  "the quiz is over";
@@ -168,13 +144,7 @@ function quizOver() {
 };
 
 function hideStartButt() {
-
 startButton.className = "hide";
-  // if (startButton.style.display === "none") {
-  //   startButton.style.display = "block";
-  // } else {
-  //   startButton.style.display = "none";
-  // }
 };
 
 function storeHighScore() {
@@ -187,29 +157,35 @@ function storeHighScore() {
     name: userInit
   };
 
-  highScoreArr.push(score);
-
-    // Add new data to localStorage Array
-  // existingScores["high-score"] = ;
-
-  // // Save back to localStorage
-  // localStorage.setItem('myLunch', JSON.stringify(existingScores));
-  
-  
-
-  // existingScores.push(highScore);
+  existingScores.push(score);
 
   localStorage.setItem("high-score", JSON.stringify(existingScores));
-  console.log(existingScores);
 
-
-  // console.log(highScores);
-  // console.log(score);
+  viewScores();
 };
 
+function viewScores() {
 
+  hideStartButt();
+
+  questionEl.innerHTML = "these are the high scores!";
+
+  while (choiceEl.firstChild) {
+    choiceEl.removeChild(choiceEl.firstChild);
+  };
+
+  var highScoreList = document.createElement("ul");
+  console.log("this is the highscores list element", highScoreList);
+  choiceEl.appendChild(highScoreList);
+
+existingScores.forEach(function (score, i) {
+  var scoreListItem = document.createElement("li");
+  scoreListItem.innerHTML = i + 1 + ". " + score.name + "'s score is " + score.score ;
+  highScoreList.appendChild(scoreListItem);
+});
+};
+
+viewScoresButton.addEventListener("click", viewScores);
 startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", hideStartButt);
 startButton.addEventListener("click", startQuiz);
-
-
