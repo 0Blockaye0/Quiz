@@ -36,6 +36,18 @@ var round = 0;
 
 var timeDisplay = document.getElementById("timer");
 
+// Get the existing data
+var existingScores = localStorage.getItem('high-score');
+
+// If no existing data, create an array
+// Otherwise, convert the localStorage string to an array
+existingScores = existingScores ? JSON.parse(existingScores) : {};
+console.log(existingScores);
+
+var highScoreArr = [];
+
+
+
 //timer function
 function countdown() {
     
@@ -115,33 +127,89 @@ function incorrectFun() {
   }
 };
 
+
+
 function quizOver() {
+  timeDisplay.innerHTML =  "the quiz is over";
 
   while (choiceEl.firstChild) {
     choiceEl.removeChild(choiceEl.firstChild);
   };
 
   var userHighScoreForm = document.createElement("form");
+  userHighScoreForm.id = "highScoreForm";
+  
   var HighScoreInput = document.createElement("input");
-  var initalPrompt = document.createElement("p");
-  initalPrompt.innerHTML = time + " is your score.please enter your initials";
-
+  HighScoreInput.id = "initials-input";
   console.log(userHighScoreForm);
 
+  var usersInitials = document.createElement("label");
+  usersInitials.innerHTML = "Enter Your Initials";
+  
+  var initalPrompt = document.createElement("p");
+  initalPrompt.innerHTML = "Your Score is " + time;
+
+  var subScoreButt = document.createElement("button");
+  subScoreButt.textContent = "submit";
 
   questionEl.innerHTML = "All done!";
 
   choiceEl.appendChild(initalPrompt);
   choiceEl.appendChild(userHighScoreForm);
+  userHighScoreForm.appendChild(usersInitials);
   userHighScoreForm.appendChild(HighScoreInput);
-
-
-
-
-  timeDisplay.innerHTML =  "the quiz is over";
-    console.log("this is the score:", time);
+  userHighScoreForm.appendChild(subScoreButt);
+  
+  
+  subScoreButt.addEventListener("click", function(event) {
+    event.preventDefault();
+  });
+  subScoreButt.addEventListener("click", storeHighScore);
 };
 
+function hideStartButt() {
+
+startButton.className = "hide";
+  // if (startButton.style.display === "none") {
+  //   startButton.style.display = "block";
+  // } else {
+  //   startButton.style.display = "none";
+  // }
+};
+
+function storeHighScore() {
+  console.log("user submited thier score!");
+
+  var userInit = document.getElementById("initials-input").value;
+
+  var score = {
+    score: time ,
+    name: userInit
+  };
+
+  highScoreArr.push(score);
+
+    // Add new data to localStorage Array
+  // existingScores["high-score"] = ;
+
+  // // Save back to localStorage
+  // localStorage.setItem('myLunch', JSON.stringify(existingScores));
+  
+  
+
+  // existingScores.push(highScore);
+
+  localStorage.setItem("high-score", JSON.stringify(existingScores));
+  console.log(existingScores);
+
+
+  // console.log(highScores);
+  // console.log(score);
+};
+
+
 startButton.addEventListener("click", countdown);
+startButton.addEventListener("click", hideStartButt);
 startButton.addEventListener("click", startQuiz);
+
 
